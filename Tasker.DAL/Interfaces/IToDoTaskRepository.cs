@@ -4,7 +4,7 @@ namespace Tasker.DAL.Interfaces
 {
     public interface IToDoTaskRepository
     {
-        Task<IEnumerable<TodoTask>> GetTasksAsync(Guid userId);
+        Task<IEnumerable<TodoTask>> GetTasksByUserIdAsync(Guid userId);
 
         Task<TodoTask> GetTaskAsync(Guid id);
 
