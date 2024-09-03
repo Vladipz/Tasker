@@ -16,8 +16,12 @@ namespace Tasker.DAL.Entities
 
         public TaskPriorityType Priority { get; set; } = TaskPriorityType.None;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
+
+        public Guid UserId { get; set; }
+
+        public TaskerUser User { get; set; }
     }
 }
