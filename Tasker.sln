@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasker.API", "Tasker.API\Tasker.API.csproj", "{59092E5B-B81F-4253-A6D1-676AB5C510AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasker.BLL", "Tasker.BLL\Tasker.BLL.csproj", "{B29076FB-73A9-41A6-A419-F0B264894FB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasker.DAL", "Tasker.DAL\Tasker.DAL.csproj", "{A09DB3D7-3C38-4616-B3DB-8354BF89E955}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59092E5B-B81F-4253-A6D1-676AB5C510AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59092E5B-B81F-4253-A6D1-676AB5C510AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59092E5B-B81F-4253-A6D1-676AB5C510AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59092E5B-B81F-4253-A6D1-676AB5C510AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B29076FB-73A9-41A6-A419-F0B264894FB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B29076FB-73A9-41A6-A419-F0B264894FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B29076FB-73A9-41A6-A419-F0B264894FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B29076FB-73A9-41A6-A419-F0B264894FB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A09DB3D7-3C38-4616-B3DB-8354BF89E955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A09DB3D7-3C38-4616-B3DB-8354BF89E955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A09DB3D7-3C38-4616-B3DB-8354BF89E955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A09DB3D7-3C38-4616-B3DB-8354BF89E955}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
