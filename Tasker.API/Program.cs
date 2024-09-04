@@ -30,6 +30,7 @@ builder.Services.AddIdentity<TaskerUser, IdentityRole<Guid>>(options => options.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<UptadeDatedEntityInterceptor>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IToDoTaskService, ToDoTaskService>();
 builder.Services.AddScoped<IUserService, UserService>();
