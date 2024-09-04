@@ -3,9 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using Microsoft.AspNetCore.Identity;
 
+using Tasker.DAL.Interfaces;
+
 namespace Tasker.DAL.Entities
 {
-    public class TaskerUser : IdentityUser<Guid>
+    public class TaskerUser : IdentityUser<Guid>, IDatedEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,5 +18,9 @@ namespace Tasker.DAL.Entities
         }
 
         public IEnumerable<TodoTask> Tasks { get; set; } = default!;
+
+        public DateTimeOffset CreatedAt { get; set; }
+
+        public DateTimeOffset UpdatedAt { get; set; }
     }
 }

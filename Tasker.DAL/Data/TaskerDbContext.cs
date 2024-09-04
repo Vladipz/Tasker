@@ -20,14 +20,10 @@ namespace Tasker.DAL.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TodoTask>()
-                .Property(t => t.CreatedAt)
-                .ValueGeneratedOnAdd()
-                .HasDefaultValueSql("GETDATE()");
+                .Property(t => t.CreatedAt);
 
             modelBuilder.Entity<TodoTask>()
-                .Property(t => t.UpdatedAt)
-                .ValueGeneratedOnAddOrUpdate()
-                .HasDefaultValueSql("GETDATE()");
+                .Property(t => t.UpdatedAt);
 
             modelBuilder.Entity<TodoTask>()
              .HasOne(t => t.User)

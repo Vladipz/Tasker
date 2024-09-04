@@ -1,8 +1,9 @@
+using Tasker.BLL.Interfaces;
 using Tasker.BLL.Models.Enums;
 
 namespace Tasker.BLL.Models
 {
-    public class TodoTaskModel
+    public class TodoTaskModel : IDatedEntity
     {
         public Guid Id { get; set; }
 
@@ -16,8 +17,7 @@ namespace Tasker.BLL.Models
 
         public TaskPriorityType Priority { get; set; } = TaskPriorityType.None;
 
-        public DateTime? CreatedAt { get; set; }
-
-        public DateTime? UpdatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
     }
 }

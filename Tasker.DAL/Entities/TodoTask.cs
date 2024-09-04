@@ -1,8 +1,9 @@
 using Tasker.DAL.Entities.Enums;
+using Tasker.DAL.Interfaces;
 
 namespace Tasker.DAL.Entities
 {
-    public class TodoTask
+    public class TodoTask : IDatedEntity
     {
         public Guid Id { get; set; }
 
@@ -16,12 +17,12 @@ namespace Tasker.DAL.Entities
 
         public TaskPriorityType Priority { get; set; } = TaskPriorityType.None;
 
-        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
-
-        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
-
         public Guid UserId { get; set; }
 
         public TaskerUser User { get; set; }
+
+        public DateTimeOffset CreatedAt { get; set; }
+
+        public DateTimeOffset UpdatedAt { get; set; }
     }
 }
