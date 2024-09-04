@@ -1,5 +1,11 @@
+using FluentValidation;
+
 using Microsoft.EntityFrameworkCore;
 
+using Tasker.API.Endpoints;
+using Tasker.BLL.Interfaces;
+using Tasker.BLL.Services;
+using Tasker.BLL.Validators.ToDoTask;
 using Tasker.DAL.Data;
 using Tasker.DAL.Interfaces;
 
@@ -10,9 +16,23 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<TaskerDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// Register the Swagger generator, defining 1 or more Swagger documents
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IToDoTaskService, ToDoTaskService>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateToDoTaskValidator>();
 
 var app = builder.Build();
+
+app.MapTaskEndpoints();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.MapGet("/", () => "Hello World!");
 
