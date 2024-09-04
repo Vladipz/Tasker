@@ -13,11 +13,11 @@ namespace Tasker.DAL.Data
             _context = context;
         }
 
-        public IToDoTaskRepository TaskRepository => _toDoTaskRepository ??= new ToDoTaskRepository(_context);
+        public IToDoTaskRepository TodoTaskRepository => _toDoTaskRepository ??= new ToDoTaskRepository(_context);
 
         public Task<int> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return _context.SaveChangesAsync();
         }
     }
 }

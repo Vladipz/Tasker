@@ -2,7 +2,7 @@ namespace Tasker.DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        IToDoTaskRepository TaskRepository { get; }
+        IToDoTaskRepository TodoTaskRepository { get; }
 
         Task<int> SaveChangesAsync();
     }
