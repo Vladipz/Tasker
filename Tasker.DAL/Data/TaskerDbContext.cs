@@ -8,11 +8,13 @@ namespace Tasker.DAL.Data
 {
     public class TaskerDbContext : IdentityDbContext<TaskerUser, IdentityRole<Guid>, Guid>
     {
-        public TaskerDbContext(DbContextOptions<TaskerDbContext> options) : base(options)
+        public TaskerDbContext(DbContextOptions<TaskerDbContext> options)
+            : base(options)
         {
         }
 
         public DbSet<TodoTask> Tasks { get; set; }
+
         public DbSet<TaskerUser> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
