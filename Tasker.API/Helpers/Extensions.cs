@@ -1,11 +1,15 @@
+using System.IdentityModel.Tokens.Jwt;
+
 namespace Tasker.API.Helpers
 {
     public static class Extensions
     {
         public static Guid GetUserId(this HttpContext httpContext)
         {
-            // TODO: Implement this method
-            return Guid.Parse("A552D3F8-C738-4DAC-2DD0-08DCCD1E25F5");
+            var userId = httpContext.User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
+            // I dont check for null here because the user is required to be authenticated
+            return Guid.Parse(userId);
         }
     }
 }
