@@ -32,7 +32,7 @@ namespace Tasker.DAL.Repositories
 
         public async Task<IEnumerable<TodoTask>> GetTasksByUserIdAsync(Guid userId)
         {
-            return await _context.Tasks.ToListAsync();
+                return await _context.Tasks.Where(t => t.UserId == userId).ToListAsync();
         }
 
         public void UpdateTask(TodoTask task)

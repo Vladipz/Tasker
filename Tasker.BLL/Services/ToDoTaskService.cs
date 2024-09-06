@@ -5,6 +5,7 @@ using FluentValidation;
 using Tasker.BLL.Interfaces;
 using Tasker.BLL.Mappings;
 using Tasker.BLL.Models;
+using Tasker.DAL.Entities;
 using Tasker.DAL.Interfaces;
 
 namespace Tasker.BLL.Services
@@ -95,12 +96,21 @@ namespace Tasker.BLL.Services
                 return Error.Forbidden();
             }
 
-            task = model.ToEntity();
+            UpdateTask(task, model.ToEntity());
 
             _unitOfWork.TodoTaskRepository.UpdateTask(task);
             await _unitOfWork.SaveChangesAsync();
 
             return Result.Updated;
+        }
+
+        public static void UpdateTask(TodoTask task, TodoTask model)
+        {
+            task.Title = model.Title;
+            task.Description = model.Description;
+            task.DueDate = model.DueDate;
+            task.Priority = model.Priority;
+            task.Status = model.Status;
         }
     }
 }
