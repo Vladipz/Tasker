@@ -21,7 +21,7 @@ namespace Tasker.API.Mapping
         {
             return errors.All(e => e.Type == ErrorType.Validation)
                 ? errors.ToValidationResponse()
-                : Results.Problem();
+                : errors[0].ToResponse();
         }
 
         public static IResult ToValidationResponse(this List<Error> errors)
