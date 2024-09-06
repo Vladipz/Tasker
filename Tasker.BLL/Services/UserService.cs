@@ -22,6 +22,29 @@ namespace Tasker.BLL.Services
             _validator = validator;
         }
 
+        public async Task<ErrorOr<TaskerUserModel>> CheckPasswordAsync(TaskerUserModel userModel, string password)
+        {
+            bool isPasswordCorrect = await _userManager.CheckPasswordAsync(userModel.ToEntity(), password);
+
+            if (!isPasswordCorrect)
+            {
+                return Error.Unauthorized();
+            }
+
+            return userModel;
+        }
+
+        public async Task<ErrorOr<TaskerUserModel>> ReadAsync(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return Error.NotFound();
+            }
+
+            return user.ToModel();
+        }
+
         public async Task<ErrorOr<Created>> RegisterAsync(UserCreateModel model)
         {
             var validationresult = await _validator.ValidateAsync(model);
