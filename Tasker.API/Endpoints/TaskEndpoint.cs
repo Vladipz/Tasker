@@ -9,7 +9,7 @@ namespace Tasker.API.Endpoints
     {
         public static void MapTaskEndpoints(this IEndpointRouteBuilder app)
         {
-            var group = app.MapGroup("/api/tasks");
+            var group = app.MapGroup("/api/tasks").RequireAuthorization();
 
             group.MapGet("", async (IToDoTaskService toDoTaskService, HttpContext context) =>
             {
