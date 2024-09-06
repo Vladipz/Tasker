@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 using Tasker.API.Contracts.Enums;
 
 namespace Tasker.API.Contracts.Responses
@@ -12,8 +14,10 @@ namespace Tasker.API.Contracts.Responses
 
         public DateTime? DueDate { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TaskStatusType Status { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TaskPriorityType Priority { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
