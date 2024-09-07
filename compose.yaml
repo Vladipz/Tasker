@@ -1,0 +1,27 @@
+services:
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./Tasker.API/Dockerfile
+    ports:
+      - 5000:5001
+    environment:
+      - MSSQL_SA_PASSWORD=Password1*
+    depends_on:
+      ms-sql:
+        condition: service_healthy
+  ms-sql:
+    container_name: ms-sql
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password1*
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Password1* -Q 'SELECT 1' -C -o /dev/null || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s     

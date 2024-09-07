@@ -546,6 +546,3 @@ obj/
 .ionide
 
 .vscode/*
-
-**/Migrations/**
-# End of https://www.toptal.com/developers/gitignore/api/csharp,dotnetcore,aspnetcore,visualstudiocode

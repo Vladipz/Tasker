@@ -27,10 +27,18 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSet
 
 JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 builder.Services.AddDbContext<TaskerDbContext>(
-        (sp, options) => options
-        .UseSqlServer(connectionString)
-        .AddInterceptors(
-            sp.GetRequiredService<UptadeDatedEntityInterceptor>()));
+        (sp, options) =>
+        {
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            if (!builder.Environment.IsDevelopment())
+            {
+                var password = Environment.GetEnvironmentVariable("MSSQL_SA_PASSWORD");
+                connectionString = string.Format(connectionString, password);
+            }
+
+            options.UseSqlServer(connectionString)
+                .AddInterceptors(sp.GetRequiredService<UptadeDatedEntityInterceptor>());
+        });
 
 builder.Services.AddIdentity<TaskerUser, IdentityRole<Guid>>(options => options.User.RequireUniqueEmail = true)
     .AddEntityFrameworkStores<TaskerDbContext>()
@@ -92,6 +100,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<TaskerDbContext>();
+    db.Database.Migrate();
 }
 
 app.Run();
