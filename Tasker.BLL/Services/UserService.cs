@@ -3,6 +3,7 @@ using ErrorOr;
 using FluentValidation;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 using Tasker.BLL.Interfaces;
 using Tasker.BLL.Mappings;
@@ -15,11 +16,13 @@ namespace Tasker.BLL.Services
     {
         private readonly UserManager<TaskerUser> _userManager;
         private readonly IValidator<UserCreateModel> _validator;
+        private readonly ILogger<UserService> _logger;
 
-        public UserService(UserManager<TaskerUser> userManager, IValidator<UserCreateModel> validator)
+        public UserService(UserManager<TaskerUser> userManager, IValidator<UserCreateModel> validator, ILogger<UserService> logger)
         {
             _userManager = userManager;
             _validator = validator;
+            _logger = logger;
         }
 
         public async Task<ErrorOr<TaskerUserModel>> CheckPasswordAsync(TaskerUserModel userModel, string password)
@@ -68,6 +71,7 @@ namespace Tasker.BLL.Services
                 return result.ToValidationError<Created>();
             }
 
+            _logger.LogInformation("User {user.UserName} created a new account", user.UserName);
             return Result.Created;
         }
     }

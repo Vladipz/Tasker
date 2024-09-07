@@ -43,7 +43,7 @@ namespace Tasker.API.Endpoints
             {
                 var userId = context.GetUserId();
 
-                var result = await toDoTaskService.CreateAsync(request.ToCreateModel(), userId);
+                var result = await toDoTaskService.CreateAsync(request.ToCreateModel(), userId, "Task with Id {id} created");
                 return result.Match(
                     task => Results.Created($"/api/tasks/{task.Id}", task.ToResponse()),
                     error => error.ToResponse());

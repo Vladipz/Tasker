@@ -73,6 +73,7 @@ builder.Services.AddScoped<IToDoTaskService, ToDoTaskService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddTransient<GlobalErrorHandlingMiddleware>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateToDoTaskValidator>();
 
 var app = builder.Build();

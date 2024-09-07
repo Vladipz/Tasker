@@ -4,6 +4,8 @@ using ErrorOr;
 
 using FluentValidation;
 
+using Microsoft.Extensions.Logging;
+
 using Tasker.BLL.Builders;
 using Tasker.BLL.Interfaces;
 using Tasker.BLL.Mappings;
@@ -17,11 +19,17 @@ namespace Tasker.BLL.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<PaginationParameters> _pageValidator;
+        private readonly ILogger<ToDoTaskService> _logger;
         private readonly IValidator<TodoTaskCreateModel> _createToDoTaskValidator;
 
-        public ToDoTaskService(IUnitOfWork unitOfWork, IValidator<TodoTaskCreateModel> createToDoTaskValidator, IValidator<PaginationParameters> pageValidator)
+        public ToDoTaskService(
+            IUnitOfWork unitOfWork,
+            IValidator<TodoTaskCreateModel> createToDoTaskValidator,
+            IValidator<PaginationParameters> pageValidator,
+            ILogger<ToDoTaskService> logger)
         {
             _pageValidator = pageValidator;
+            _logger = logger;
             _unitOfWork = unitOfWork;
             _createToDoTaskValidator = createToDoTaskValidator;
         }
@@ -42,6 +50,8 @@ namespace Tasker.BLL.Services
             await _unitOfWork.TodoTaskRepository.AddTaskAsync(entity);
             await _unitOfWork.SaveChangesAsync();
 
+            _logger.LogInformation("Task with Id {id} created", entity.Id);
+
             return entity.ToModel();
         }
 
@@ -55,6 +65,8 @@ namespace Tasker.BLL.Services
 
             _unitOfWork.TodoTaskRepository.DeleteTask(task);
             await _unitOfWork.SaveChangesAsync();
+
+            _logger.LogInformation("Task with Id {id} deleted", id);
             return Result.Deleted;
         }
 
@@ -151,6 +163,8 @@ namespace Tasker.BLL.Services
 
             _unitOfWork.TodoTaskRepository.UpdateTask(task);
             await _unitOfWork.SaveChangesAsync();
+
+            _logger.LogInformation("Task with Id {id} updated", id);
 
             return Result.Updated;
         }
