@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 
 using Tasker.API.Endpoints;
 using Tasker.API.Helpers.Interceptors;
+using Tasker.API.Middlware;
 using Tasker.BLL.Interfaces;
 using Tasker.BLL.Models.User;
 using Tasker.BLL.Services;
@@ -75,6 +76,9 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateToDoTaskValidator>();
 
 var app = builder.Build();
+
+// Resister global error handling middleware
+app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
 app.UseAuthentication();
 
