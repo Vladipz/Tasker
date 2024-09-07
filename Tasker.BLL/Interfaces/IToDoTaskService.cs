@@ -10,7 +10,15 @@ namespace Tasker.BLL.Interfaces
 
         Task<ErrorOr<TodoTaskModel>> ReadAsync(Guid id, Guid userId);
 
-        Task<IEnumerable<TodoTaskModel>> ReadAllAsync(Guid userId);
+        Task<ErrorOr<PagedList<TodoTaskModel>>> ReadAllAsync(
+            Guid userId,
+            string? priorityQuery,
+            string? statusQuery,
+            DateTime? dueDate,
+            string? sortColumn,
+            string? sortOrder,
+            int page,
+            int pageSize);
 
         Task<ErrorOr<Updated>> UpdateAsync(TodoTaskCreateModel model, Guid userId, Guid id);
 

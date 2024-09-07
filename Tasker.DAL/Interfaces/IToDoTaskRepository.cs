@@ -4,7 +4,7 @@ namespace Tasker.DAL.Interfaces
 {
     public interface IToDoTaskRepository
     {
-        Task<IEnumerable<TodoTask>> GetTasksByUserIdAsync(Guid userId);
+        Task<IEnumerable<TodoTask>> GetTasksByQueryAsync(IQueryable<TodoTask> taskQuery);
 
         Task<TodoTask> GetTaskAsync(Guid id);
 
@@ -13,5 +13,7 @@ namespace Tasker.DAL.Interfaces
         void UpdateTask(TodoTask task);
 
         void DeleteTask(TodoTask task);
+
+        IQueryable<TodoTask> GetInitialQuery();
     }
 }

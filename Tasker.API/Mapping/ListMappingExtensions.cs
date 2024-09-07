@@ -9,5 +9,18 @@ namespace Tasker.API.Mapping
         {
             return tasks.Select(t => t.ToResponse());
         }
+
+        public static TaskListResponse ToResponse(this PagedList<TodoTaskModel> tasks)
+        {
+            return new TaskListResponse
+            {
+                Tasks = tasks.Items.ToAllTasksResponse(),
+                TotalCount = tasks.TotalCount,
+                Page = tasks.Page,
+                PageSize = tasks.PageSize,
+                HasNextPage = tasks.HasNext,
+                HasPreviousPage = tasks.HasPrevious,
+            };
+        }
     }
 }

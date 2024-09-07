@@ -25,14 +25,19 @@ namespace Tasker.DAL.Repositories
             _context.Tasks.Remove(task);
         }
 
+        public IQueryable<TodoTask> GetInitialQuery()
+        {
+            return _context.Tasks.AsQueryable();
+        }
+
         public async Task<TodoTask> GetTaskAsync(Guid id)
         {
             return await _context.Tasks.FindAsync(id);
         }
 
-        public async Task<IEnumerable<TodoTask>> GetTasksByUserIdAsync(Guid userId)
+        public async Task<IEnumerable<TodoTask>> GetTasksByQueryAsync(IQueryable<TodoTask> taskQuery)
         {
-                return await _context.Tasks.Where(t => t.UserId == userId).ToListAsync();
+            return await taskQuery.ToListAsync();
         }
 
         public void UpdateTask(TodoTask task)

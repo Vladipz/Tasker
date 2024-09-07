@@ -1,7 +1,10 @@
+using System.Linq.Expressions;
+
 using ErrorOr;
 
 using FluentValidation;
 
+using Tasker.BLL.Builders;
 using Tasker.BLL.Interfaces;
 using Tasker.BLL.Mappings;
 using Tasker.BLL.Models;
@@ -13,10 +16,12 @@ namespace Tasker.BLL.Services
     public class ToDoTaskService : IToDoTaskService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IValidator<PaginationParameters> _pageValidator;
         private readonly IValidator<TodoTaskCreateModel> _createToDoTaskValidator;
 
-        public ToDoTaskService(IUnitOfWork unitOfWork, IValidator<TodoTaskCreateModel> createToDoTaskValidator)
+        public ToDoTaskService(IUnitOfWork unitOfWork, IValidator<TodoTaskCreateModel> createToDoTaskValidator, IValidator<PaginationParameters> pageValidator)
         {
+            _pageValidator = pageValidator;
             _unitOfWork = unitOfWork;
             _createToDoTaskValidator = createToDoTaskValidator;
         }
@@ -53,10 +58,56 @@ namespace Tasker.BLL.Services
             return Result.Deleted;
         }
 
-        public async Task<IEnumerable<TodoTaskModel>> ReadAllAsync(Guid userId)
+        public async Task<ErrorOr<PagedList<TodoTaskModel>>> ReadAllAsync(
+            Guid userId,
+            string? priorityQuery,
+            string? statusQuery,
+            DateTime? dueDate,
+            string? sortColumn,
+            string? sortOrder,
+            int page,
+            int pageSize)
         {
-            var tasks = await _unitOfWork.TodoTaskRepository.GetTasksByUserIdAsync(userId);
-            return tasks.Select(t => t.ToModel()).ToList();
+            var pageValidationResult = await _pageValidator.ValidateAsync(new PaginationParameters { Page = page, PageSize = pageSize });
+            if (!pageValidationResult.IsValid)
+            {
+                return pageValidationResult.ToValidationError<PagedList<TodoTaskModel>>();
+            }
+
+            var initialQuery = _unitOfWork.TodoTaskRepository.GetInitialQuery();
+
+            // create filter and pagination query
+            var taskQuery = new TodoTaskQueryBuilder(initialQuery)
+                .FilterByStatus(statusQuery)
+                .FilterByDueDate(dueDate)
+                .FilterByPriority(priorityQuery)
+                .FilterByUserId(userId)
+                .Build();
+
+            // create sort query
+            if (sortOrder?.ToLower() == "desc")
+            {
+                taskQuery = taskQuery.OrderByDescending(GetSortProperty(sortColumn));
+            }
+            else
+            {
+                taskQuery = taskQuery.OrderBy(GetSortProperty(sortColumn));
+            }
+
+            // paginate
+            var taskQueryResponse = taskQuery.Select(t => t.ToModel());
+
+            return await PagedList<TodoTaskModel>.CreateAsync(taskQueryResponse, page, pageSize);
+        }
+
+        private static Expression<Func<TodoTask, object>> GetSortProperty(string? sortBy)
+        {
+            return sortBy?.ToLower() switch
+            {
+                "date" => task => task.DueDate,
+                "priority" => task => task.Priority,
+                _ => task => task.DueDate,
+            };
         }
 
         public async Task<ErrorOr<TodoTaskModel>> ReadAsync(Guid id, Guid userId)

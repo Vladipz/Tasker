@@ -1,3 +1,4 @@
+using Tasker.API.Contracts.Enums;
 using Tasker.API.Contracts.Requests;
 using Tasker.API.Helpers;
 using Tasker.API.Mapping;
@@ -11,14 +12,31 @@ namespace Tasker.API.Endpoints
         {
             var group = app.MapGroup("/api/tasks").RequireAuthorization();
 
-            group.MapGet("", async (IToDoTaskService toDoTaskService, HttpContext context) =>
+            group.MapGet("", async (
+                IToDoTaskService toDoTaskService,
+                HttpContext context,
+                string? priorityQuery,
+                string? statusQuery,
+                DateTime? dueDate,
+                string? sortColumn,
+                string? sortOrder,
+                int page,
+                int pageSize) =>
             {
                 var userId = context.GetUserId();
 
-                var result = await toDoTaskService.ReadAllAsync(userId);
-                var response = result.ToAllTasksResponse();
-
-                return Results.Ok(response);
+                var result = await toDoTaskService.ReadAllAsync(
+                    userId,
+                    priorityQuery,
+                    statusQuery,
+                    dueDate,
+                    sortColumn,
+                    sortOrder,
+                    page,
+                    pageSize);
+                return result.Match(
+                    tasks => Results.Ok(tasks.ToResponse()),
+                    error => error.ToResponse());
             });
 
             group.MapPost("", async (TaskRequest request, IToDoTaskService toDoTaskService, HttpContext context) =>
