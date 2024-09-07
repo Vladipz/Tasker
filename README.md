@@ -6,7 +6,8 @@ Tasker is a simple task manager that allows you to create, edit, and delete task
 
 ### Prerequisites 
 - .NET 8.0
-- A SQL database (SQL Server, MySQL, PostgreSQL, SQLite)
+- A SQL database (SQL Server)
+- EF Core Tools
 
 ### Cloning the repository
 ```bash
@@ -22,6 +23,7 @@ cp appsettings.example.json appsettings.Development.json
 cd ..
 ```
 Edit appsettings.json to include your database connection string and other settings.
+
 2. Install dependencies
 ```bash
 dotnet restore
