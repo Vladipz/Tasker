@@ -13,7 +13,7 @@ Tasker is a simple task manager that allows you to create, edit, and delete task
 git clone https://github.com/Vladipz/Tasker.git 
 cd Tasker
 ```
-### Setup the environment
+### Setup the environment (local)
 1. Configure Application Settings
 Copy the example configuration file and edit it to set up your environment:
 ```bash
@@ -34,6 +34,24 @@ dotnet ef database update
 ```bash
 dotnet run --project .\Tasker.API\
 ```
+### Using docker-compose
+
+To run the app using docker compose:
+
+1. Clone the repository
+```bash
+git clone https://github.com/Vladipz/Tasker.git 
+cd Tasker
+```
+
+2. Run docker-compose
+```bash
+docker-compose up
+```
+That's it, the app is preconfigured in the [compose file](compose.yaml), so no extra configuration is required. After all of the containers have started, you'll have 3 running containers:
+- ASP .NET Core API on port 5001 (http)
+- MsSql database on port 5002 (http)
+
 
 ## API Documentation
 
