@@ -15,7 +15,7 @@ services:
     container_name: ms-sql
     image: mcr.microsoft.com/mssql/server:2019-latest
     ports:
-      - "1433:1433"
+      - "5001:1433"
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Password1*
@@ -24,4 +24,8 @@ services:
       interval: 10s
       retries: 10
       start_period: 10s
-      timeout: 3s     
+      timeout: 3s   
+    volumes:
+      - sql_data:/var/opt/mssql
+volumes:
+  sql_data:
