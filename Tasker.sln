@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasker.BLL", "Tasker.BLL\Ta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasker.DAL", "Tasker.DAL\Tasker.DAL.csproj", "{A09DB3D7-3C38-4616-B3DB-8354BF89E955}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasker.Tests", "Tasker.Tests\Tasker.Tests.csproj", "{82875B35-9EEA-4873-ADD8-C56AFF718A50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{A09DB3D7-3C38-4616-B3DB-8354BF89E955}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A09DB3D7-3C38-4616-B3DB-8354BF89E955}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A09DB3D7-3C38-4616-B3DB-8354BF89E955}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82875B35-9EEA-4873-ADD8-C56AFF718A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82875B35-9EEA-4873-ADD8-C56AFF718A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82875B35-9EEA-4873-ADD8-C56AFF718A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82875B35-9EEA-4873-ADD8-C56AFF718A50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
